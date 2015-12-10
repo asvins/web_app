@@ -21,7 +21,7 @@ angular
       events:true,
     });
 
-    $urlRouterProvider.otherwise('/dashboard/home');
+    $urlRouterProvider.otherwise('/login');
 
     $stateProvider
       .state('dashboard', {
@@ -95,7 +95,16 @@ angular
       })
       .state('dashboard.form',{
         templateUrl:'views/form.html',
-        url:'/form'
+        controller: 'FormCtrl',
+        url:'/dados',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/form.js']
+            })
+          }
+        }
     })
       .state('dashboard.blank',{
         templateUrl:'views/pages/blank.html',
@@ -107,7 +116,7 @@ angular
     })
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',
-        url:'/chart',
+        url:'/medicamentos',
         controller:'ChartCtrl',
         resolve: {
           loadMyFile:function($ocLazyLoad) {
@@ -127,7 +136,16 @@ angular
     })
       .state('dashboard.table',{
         templateUrl:'views/table.html',
-        url:'/table'
+        controller: 'ContasCtrl',
+        url:'/contas',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return  $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/contas.js']
+            })
+          }
+        }
     })
       .state('dashboard.panels-wells',{
           templateUrl:'views/ui-elements/panels-wells.html',

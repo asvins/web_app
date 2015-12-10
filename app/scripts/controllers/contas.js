@@ -7,7 +7,7 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('FormCtrl', ['$scope', function($scope) {
+  .controller('ContasCtrl', ['$scope', function($scope) {
     $scope.patient = {
       email: "john.doe@example.com",
       name: "João Silva",
@@ -17,7 +17,7 @@ angular.module('sbAdminApp')
       weight:  "75,3"
     };
 
-    $scope.save = function() {
-      console.log("ahá");
+    $scope.pay = function() {
+      console.log("Pagando...");
     };
 }]);

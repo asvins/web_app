@@ -8,9 +8,22 @@
  */
 angular.module('sbAdminApp')
   .controller('MainCtrl', function($scope,$position) {
+    $scope.controls = {
+      recentMedAdded: "false"
+    };
+
     $scope.showDetails = function (med) {
       $scope.curr_med = med;
-    }
+    };
+
+    $scope.medicationAdded = function (med) {
+      setTimeout(function(){
+        $scope.$apply(function(){
+            $scope.controls.recentMedAdded = 'false';
+        })}, 3000);
+      $scope.controls.recentMedAdded = 'true';
+    };
+
     $scope.medications = [
       {
         name: "DULOXETINA DR 60MG CÁP.",

@@ -62,9 +62,10 @@
       <p style="margin-top: 10px; margin-bottom: 10px;"><b>registro:</b> {{selected_med.register}}</p>
       <p style="margin-top: 10px; margin-bottom: 10px;"><a href="{{selected_med.bula}}" target="blank">Baixar bula</a></p>
       <div class="panel-footer" ng-show="selected_med.need_prescription == 'true'" style="margin-left: -15px; margin-top: -10px; margin-bottom: -15px; margin-right: -15px;">
-        <span class="text-danger">Este medicamento exige receita médica!</span><br>
-        Fazer upload da receita
-        <input type="file">
+        <span class="text-danger" ng-show="selected_med.receipt_uploaded == 'false'">Este medicamento exige receita médica!<br><span class="text-muted"> Fazer upload</span></span> 
+        <input ng-show="selected_med.receipt_uploaded == 'false'" type="file">
+        <span class="text-success" ng-show="selected_med.receipt_uploaded == 'true'">Sua receita para este medicamento já foi aprovada!</span><br>
+
       </div>
     </div>
   </div>

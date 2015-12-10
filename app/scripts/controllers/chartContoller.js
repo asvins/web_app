@@ -29,6 +29,7 @@ angular.module('sbAdminApp')
        need_prescription: "true",
        name: "DULOXETINA DR 60mg CAP",
        shipment_date: "24/09",
+       receipt_uploaded: "true",
        will_send: "true",
        dosage: "1 - 8:30, 2 - 16:30",
        bula: "http://www.sanofi.com.br/produtos/notice_aas.pdf",
@@ -38,7 +39,8 @@ angular.module('sbAdminApp')
      {
        id: 2,
        type: "cápsula",
-       need_prescription: "false",
+       need_prescription: "true",
+       receipt_uploaded: "false",
        name: "FENOFIBRATO 250mg CAP",
        shipment_date: "24/09",
        will_send: "true",

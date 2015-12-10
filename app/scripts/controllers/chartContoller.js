@@ -8,62 +8,94 @@
  */
 angular.module('sbAdminApp')
   .controller('ChartCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
-    $scope.line = {
-	    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-	    series: ['Series A', 'Series B'],
-	    data: [
-	      [65, 59, 80, 81, 56, 55, 40],
-	      [28, 48, 40, 19, 86, 27, 90]
-	    ],
-	    onClick: function (points, evt) {
-	      console.log(points, evt);
-	    }
+    $scope.selected_med = null;
+
+    $scope.select = function (med) {
+      $scope.selected_med = med
     };
 
-    $scope.bar = {
-	    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-		series: ['Series A', 'Series B'],
+    $scope.toggleSend = function () {
+      if ($scope.selected_med.will_send == "true") {
+        $scope.selected_med.will_send = "false";
+      } else {
+        $scope.selected_med.will_send = "true";
+      }
+    }
 
-		data: [
-		   [65, 59, 80, 81, 56, 55, 40],
-		   [28, 48, 40, 19, 86, 27, 90]
-		]
-    	
-    };
-
-    $scope.donut = {
-    	labels: ["Download Sales", "In-Store Sales", "Mail-Order Sales"],
-    	data: [300, 500, 100]
-    };
-
-    $scope.radar = {
-    	labels:["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-
-    	data:[
-    	    [65, 59, 90, 81, 56, 55, 40],
-    	    [28, 48, 40, 19, 96, 27, 100]
-    	]
-    };
-
-    $scope.pie = {
-    	labels : ["Download Sales", "In-Store Sales", "Mail-Order Sales"],
-    	data : [300, 500, 100]
-    };
-
-    $scope.polar = {
-    	labels : ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"],
-    	data : [300, 500, 100, 40, 120]
-    };
-
-    $scope.dynamic = {
-    	labels : ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"],
-    	data : [300, 500, 100, 40, 120],
-    	type : 'PolarArea',
-
-    	toggle : function () 
-    	{
-    		this.type = this.type === 'PolarArea' ?
-    	    'Pie' : 'PolarArea';
-		}
-    };
-}]);
+    $scope.medications = [
+     {
+       id: 1,
+       type: "pomada",
+       need_prescription: "true",
+       name: "DULOXETINA DR 60mg CAP",
+       shipment_date: "24/09",
+       will_send: "true",
+       dosage: "1 - 8:30, 2 - 16:30",
+       bula: "http://www.sanofi.com.br/produtos/notice_aas.pdf",
+       supervisor: "João Silva",
+       register: "099742883"
+     },
+     {
+       id: 2,
+       type: "cápsula",
+       need_prescription: "false",
+       name: "FENOFIBRATO 250mg CAP",
+       shipment_date: "24/09",
+       will_send: "true",
+       dosage: "1 - 8:30, 2 - 16:30",
+       bula: "http://www.sanofi.com.br/produtos/notice_aas.pdf",
+       supervisor: "João Silva",
+       register: "099742883"
+     },
+     {
+       id: 3,
+       type: "tablete",
+       need_prescription: "false",
+       name: "LISINOPRIL 10mg TAB",
+       shipment_date: "24/09",
+       will_send: "true",
+       dosage: "1 - 8:30, 2 - 16:30",
+       bula: "http://www.sanofi.com.br/produtos/notice_aas.pdf",
+       supervisor: "João Silva",
+       register: "099742883"
+     }
+    ];
+    $scope.extras = [
+     {
+       id: 4,
+       type: "cápsula",
+       need_prescription: "false",
+       name: "FLORATIL 50mg CAP",
+       shipment_date: "24/09",
+       will_send: "true",
+       dosage: "1 - 8:30, 2 - 16:30",
+       bula: "http://www.sanofi.com.br/produtos/notice_aas.pdf",
+       supervisor: "João Silva",
+       register: "099742883"
+     },
+     {
+       id: 5,
+       type: "cápsula",
+       need_prescription: "false",
+       name: "FENOFIBRATO 250mg CAP",
+       shipment_date: "24/09",
+       will_send: "true",
+       dosage: "1 - 8:30, 2 - 16:30",
+       bula: "http://www.sanofi.com.br/produtos/notice_aas.pdf",
+       supervisor: "João Silva",
+       register: "099742883"
+     },
+     {
+       id: 6,
+       type: "tablete",
+       need_prescription: "false",
+       name: "LISINOPRIL 10mg TAB",
+       shipment_date: "24/09",
+       will_send: "true",
+       dosage: "1 - 8:30, 2 - 16:30",
+       bula: "http://www.sanofi.com.br/produtos/notice_aas.pdf",
+       supervisor: "João Silva",
+       register: "099742883"
+     }
+    ];
+    }]);

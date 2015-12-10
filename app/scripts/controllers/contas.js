@@ -8,16 +8,22 @@
  */
 angular.module('sbAdminApp')
   .controller('ContasCtrl', ['$scope', function($scope) {
-    $scope.patient = {
-      email: "john.doe@example.com",
-      name: "João Silva",
-      cpf: "70529428124",
-      gender: 2,
-      medical_history: "Diabetes tipo II, Alergia a ácaros, animais domésticos.",
-      weight:  "75,3"
+    $scope.balance = {
+      bill: "R$103,21",
+      phone: "+55(11)97088-4415",
+      credit_card_number: "4490-XXXX-XXXX-5625",
+      address: "Rua Harmonia, 129, Apartamento 29",
+      delivery_address: "Av. Brigadeiro Faria Lima, 775, 5o Andar"
+    };
+
+    $scope.update_data = {
+    };
+
+    $scope.save = function() {
+      console.log($scope.update_data);
     };
 
     $scope.pay = function() {
-      console.log("Pagando...");
-    };
+      console.log("Pagando..");
+    }
 }]);

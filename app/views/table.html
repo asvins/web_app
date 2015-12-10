@@ -13,7 +13,7 @@
         </div>
         <div class="pannel-body" style="margin-left: 20px; margin-bottom: 15px;">
           <h3>
-            <b>Balanço atual:</b> R$42,00
+            <b>Balanço atual:</b> {{balance.bill}}
           </h3>
           <button type="button" class="btn btn-default btn-info" ng-click="pay()"><i class="fa fa-money"><strong>   Pagar</strong></i>
           </button>
@@ -39,16 +39,22 @@
               <th>
                 Endereço de cobrança
               </th>
+              <th>
+                Telefone
+              </th>
             </thead>
             <tbody>
               <td>
-                4490-XXXX-XXXX-5625
+                {{balance.credit_card_number}}
               </td>
               <td>
-                Rua Harmonia, 129, Apartamento 29
+                {{balance.delivery_address}}
               </td>
               <td>
-                Av. Brigadeiro Faria Lima, 775, 5o Andar
+                {{balance.address}}
+              </td>
+              <td>
+                {{balance.phone}}
               </td>
             </tbody>
           </table>
@@ -56,29 +62,31 @@
         <h3>Atualizar dados</h3>
         <div class="form-group">
             <label>Cartão de crédito</label>
-            <input class="form-control" placeholder="Ex.: 4492992837256625">
+            <input class="form-control" placeholder="Ex.: 4492992837256625" ng-model="update_data.credit_card_number">
+            <label>Telefone</label>
+            <input class="form-control" placeholder="Ex.: +55(11)97726-8829" ng-model="update_data.phone">
             <hr>
             <h4 class="text-muted">
               Entrega
             </h4>
             <label>Endereço</label>
-            <input class="form-control" placeholder="Ex.: Rua Harmonia">
+            <input class="form-control" placeholder="Ex.: Rua Harmonia" ng-model="update_data.del_addr.main">
             <label>Número</label>
-            <input class="form-control" placeholder="Ex.: 129">
+            <input class="form-control" placeholder="Ex.: 129" ng-model="update_data.del_addr.number">
             <label>Complemento</label>
-            <input class="form-control" placeholder="Ex.: Apartamento 29">
+            <input class="form-control" placeholder="Ex.: Apartamento 29" ng-model="update_data.del_addr.compl">
             <hr>
             <h4 class="text-muted">
               Cobrança
             </h4>
             <label>Endereço</label>
-            <input class="form-control" placeholder="Ex.: Rua Harmonia">
+            <input class="form-control" placeholder="Ex.: Rua Harmonia" ng-model="update_data.bill_addr.main">
             <label>Número</label>
-            <input class="form-control" placeholder="Ex.: 129">
+            <input class="form-control" placeholder="Ex.: 129" ng-model="update_data.bill_addr.number">
             <label>Complemento</label>
-            <input class="form-control" placeholder="Ex.: Apartamento 29">
+            <input class="form-control" placeholder="Ex.: Apartamento 29" ng-model="update_data.bill_addr.compl">
             <br>
-            <button type="button" class="btn btn-default btn-info">Atualizar dados</button>
+            <button type="button" class="btn btn-default btn-info" ng-click="save()">Atualizar dados</button>
         </div>
       </div>
     </div>

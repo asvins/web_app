@@ -1,41 +1,14 @@
 <div class="panel-body">
     <ul class="timeline">
-        <li>
-            <div class="timeline-badge success"><i class="fa fa-check"></i>
+        <li ng-repeat="e in events" class="{{timelinePosition(e)}}">
+            <div class="timeline-badge {{tagToOptions(e.tags)[1]}}"><i class="fa fa-{{tagToOptions(e.tags)[0]}}"></i>
             </div>
             <div class="timeline-panel">
                 <div class="timeline-heading">
-                    <h4 class="timeline-title">Medicações de hoje</h4>
-                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> Hoje - 14:35</small>
-                    </p>
+                    <h4 class="timeline-title">{{e.title}}</h4>
                 </div>
                 <div class="timeline-body">
-                    <p>DULOXETINA DR 60MG - 2 cápsulas</p>
-                    <p>FLORASTOR DR 60MG - 1 cápsula</p>
-                </div>
-            </div>
-        </li>
-        <li class="timeline-inverted">
-            <div class="timeline-badge info"><i class="fa fa-credit-card"></i>
-            </div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h4 class="timeline-title">Pagamento Aprovado!</h4>
-                </div>
-                <div class="timeline-body">
-                    <p>Informamos que seu pagamento, com cartão <b>**** **** **** 5382</b> foi aprovado com sucesso! <br> <a href="#">Ver mais detalhes.</a></p>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="timeline-badge warning"><i class="fa fa-truck"></i>
-            </div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h4 class="timeline-title">Medicações a caminho</h4>
-                </div>
-                <div class="timeline-body">
-                    <p>Seu pedido para as semanas <b>de 23/11/2015 a 7/12/2015</b> já estão a caminho! A previsão de chegada é para o dia <b>21/11/2015.</b><a href="#"> <br> Alterar endereço de entrega.</a></p>
+                  {{e.description}}
                 </div>
             </div>
         </li>

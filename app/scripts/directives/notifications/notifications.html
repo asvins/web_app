@@ -1,18 +1,44 @@
 <div class="panel-body">
     <div class="list-group">
-        <a href="#" class="list-group-item">
-            <i class="fa fa-photo fa-fw"></i> DULOXETINA DR 60MG CÁP.
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-photo fa-fw"></i> SULFATO FERROSO 325MG TAB.
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-photo fa-fw"></i> FLORASTOR 250MG CÁP.
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-photo fa-fw"></i> SALINE SPRAY NASAL 0.65%
+        <a ng-repeat="med in medications" ng-click="showDetails(med)" data-toggle="modal" data-target="#myModal" class="list-group-item">
+            <i class="fa fa-photo fa-fw"></i> {{med.name}}
         </a>
     </div>
-    <!-- /.list-group -->
-    <a href="#" class="btn btn-default btn-block">Mais detalhes</a>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Detalhes do medicamento</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                      <strong>nome:</strong> {{curr_med.name}}
+                    </p>
+                    <p>
+                      <strong>princípios ativos:</strong> {{curr_med.active_agent}}
+                    </p>
+                    <p>
+                      <strong>no. de registro:</strong> {{curr_med.br_register}}
+                    </p>
+                    <p>
+                      <strong>classe terapêutica:</strong> {{curr_med.terapeutic_class}}
+                    </p>
+                    <p>
+                      <strong>fabricante:</strong> {{curr_med.manufacturer}}
+                    </p>
+                    <p>
+                      <strong>tarja:</strong> {{curr_med.label}}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Adicionar na próxima caixa</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </div>

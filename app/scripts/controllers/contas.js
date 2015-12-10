@@ -20,10 +20,12 @@ angular.module('sbAdminApp')
     };
 
     $scope.save = function() {
+      // fazer o post (ou put) e atualizar $scope.balance
       console.log($scope.update_data);
     };
 
     $scope.pay = function() {
+      // fazer o post pra pay e atualizar o $scope.balance.bill
       console.log("Pagando..");
     }
 }]);

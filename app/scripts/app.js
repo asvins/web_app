@@ -105,9 +105,18 @@ angular
           }
         }
     })
-      .state('dashboard.blank',{
-        templateUrl:'views/pages/blank.html',
-        url:'/blank'
+      .state('registration',{
+        templateUrl:'views/pages/registration.html',
+        controller:'RegistrationCtrl',
+        url:'/registration',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return  $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/registration.js']
+            })
+          }
+        }
     })
       .state('login',{
         templateUrl:'views/pages/login.html',

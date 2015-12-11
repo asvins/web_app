@@ -118,6 +118,19 @@ angular
           }
         }
     })
+      .state('treatment',{
+        templateUrl:'views/pages/treatment.html',
+        controller:'TreatmentCtrl',
+        url:'/treatment',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return  $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/treatment.js']
+            })
+          }
+        }
+    })
       .state('login',{
         templateUrl:'views/pages/login.html',
         url:'/login'

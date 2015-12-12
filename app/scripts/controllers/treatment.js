@@ -23,7 +23,7 @@ angular.module('sbAdminApp')
 
 
     $scope.showDetails = function (patient) {
-      $scope.selectedTreatment = $scope.treatments.find(treatmentFinderForPatient(patient));
+      $scope.selectedTreatment = $scope.treatments.find(treatmentFinderForPatient(patient ));
     };
 
 
@@ -47,11 +47,20 @@ angular.module('sbAdminApp')
         patient_id: 2,
         pharmacist_id: 1,
         status: 0,
+        comments: "Paciente tem se recuperado aos poucos da complicação, porém com sintomas ainda existentes.",
         prescriptions: [
           {
+            medication: "DIPIRONA 60MG CÁP.",
             starting_at: "15/10/2015",
             finishing_at: "30/10/2015",
-            frequency: 0,
+            frequency: 3,
+            medication_id: 2
+          },
+          {
+            medication: "NEOCESOL 1%.",
+            starting_at: "18/11/2015",
+            finishing_at: "21/11/2015",
+            frequency: 1,
             medication_id: 2
           }
         ],

@@ -32,7 +32,7 @@
 						<!-- /.panel-body -->
 				</div>
 			</div>
-			<div class="col-lg-8" ng-show="selectedTreatment != null">
+			<div class="col-lg-6" ng-show="selectedTreatment != null">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 							Tratamentos
@@ -44,33 +44,40 @@
 										<input class="form-control" value="{{selectedTreatment.title}}" placeholder="Ex.: Químioterapia">
 										<br>
 										<label>Status</label>
-										<input class="form-control" value="{{selectedTreatment.status}}">
-										<br>
-										<label>CPF</label>
-										<input class="form-control" value="{{patient.cpf}}">
-										<br>
-										<label>Sexo</label>
-										<br>
 										<div class="radio">
 											<label>
-													<input type="radio" ng-model="patient.gender" id="gender1" value="0" checked> Masculino
+													<input type="radio" ng-model="selectedTreatment.status" id="status1" value="0" checked> Ativo
 											</label>
 										</div>
 										<div class="radio">
 											<label>
-													<input type="radio" ng-model="patient.gender" id="gender2" value="1"> Feminino
+													<input type="radio" ng-model="selectedTreatment.status" id="status2" value="1"> Inativo
 											</label>
 										</div>
-										<div class="radio">
-											<label>
-													<input type="radio" ng-model="patient.gender" id="gender3" value="2"> Outro
-											</label>
-										</div>
+										<label>Comentários</label>
 										<br>
-										<button type="submit" ng-click="save()" class="btn btn-info">Enviar dados</button>
+										<textarea class="form-control" rows="4">{{selectedTreatment.comments}}</textarea>
+										<h3 class="text-muted">Prescrições</h3>
+										<div class="row" style="margin-left: 15px;">
+											<div class="panel panel-default col-lg-4 col-lg-offset-1" ng-repeat="pr in selectedTreatment.prescriptions">
+												<div class="panel-heading" style="margin-left: -15px; margin-right: -15px;">
+													{{pr.medication}}
+												</div>
+												<div class="panel-body">
+													<strong>Validade:</strong> De {{pr.starting_at}} até {{pr.finishing_at}}.
+													<br>
+													<strong>Frequêcia:</strong> {{pr.frequency}} vez(es) ao dia.
+													<br>
+													<a href="http://www.receipts-templates.com/wp-content/uploads/2014/12/Medical-receipt.png" target="_blank">Baixar receita atrelada.</a>
+												</div>
+											</div>
+										</div>
+										<div class="row" style="margin-left: 10px;">
+											<button type="submit" ng-click="save()" class="btn btn-info">Enviar dados</button>
+											<button type="submit" ng-click="save()" class="btn btn-default">Criar novo tratamento</button>
+										</div>
 								</div>
 						</form>
-
 					</div>
 				</div>
 			</div>

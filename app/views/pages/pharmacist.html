@@ -6,7 +6,7 @@
 			</h2>
 		</div>
 		<div class="row">
-			<div class="col-lg-6">
+			<div class="col-lg-4">
 				<div class="panel panel-default">
 						<div class="panel-heading">
 								Pacientes
@@ -34,7 +34,7 @@
 						<!-- /.panel-body -->
 				</div>
 			</div>
-			<div class="col-lg-6" ng-show="selectedTreatment != null">
+			<div class="col-lg-8" ng-show="selectedTreatment != null">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 							Tratamentos
@@ -43,22 +43,24 @@
 						<form role="form">
 								<div class="form-group">
 										<label>Nome</label>
-										<input class="form-control" value="{{selectedTreatment.title}}" placeholder="Ex.: Químioterapia">
+                    <p class="form-control-static">{{selectedTreatment.title}}</p>
 										<br>
 										<label>Status</label>
-										<div class="radio">
-											<label>
-													<input type="radio" ng-model="selectedTreatment.status" id="status1" value="0" checked> Ativo
-											</label>
-										</div>
-										<div class="radio">
-											<label>
-													<input type="radio" ng-model="selectedTreatment.status" id="status2" value="1"> Inativo
-											</label>
-										</div>
+                    <fieldset disabled>
+                      <div class="radio">
+                        <label>
+                          <input type="radio" ng-model="selectedTreatment.status" id="status1" value="0" checked> Ativo
+                        </label>
+                      </div>
+                      <div class="radio">
+                        <label>
+                          <input type="radio" ng-model="selectedTreatment.status" id="status2" value="1"> Inativo
+                        </label>
+                      </div>
+                    </fieldset>
 										<label>Comentários</label>
 										<br>
-										<textarea class="form-control" rows="4">{{selectedTreatment.comments}}</textarea>
+                    <p class="form-control-static">{{selectedTreatment.comments}}</p>
 										<h3 class="text-muted">Prescrições</h3>
 										<div class="row" style="margin-left: 15px;">
 											<div class="panel panel-default col-lg-4 col-lg-offset-1" ng-repeat="pr in selectedTreatment.prescriptions">
@@ -73,9 +75,6 @@
 													<a href="http://www.receipts-templates.com/wp-content/uploads/2014/12/Medical-receipt.png" target="_blank">Baixar receita atrelada.</a>
 												</div>
 											</div>
-										</div>
-										<div class="row" style="margin-left: 10px;">
-											<button type="submit" ng-click="save()" class="btn btn-info">Enviar dados</button>
 										</div>
 								</div>
 						</form>

@@ -8,11 +8,7 @@
  */
 angular.module('sbAdminApp')
   .controller('TreatmentCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
-    console.log($rootScope.user);
     $scope.selectedTreatment = null
-    $scope.user = {
-      scope: "medic"
-    };
 
     var treatmentFinderForPatient = function (patient) {
       return function (treatment, index, arr) {

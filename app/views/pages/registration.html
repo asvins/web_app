@@ -36,13 +36,13 @@
 	                        <form role="form">
                             <div class="form-group">
                               <label>Email</label>
-                              <input class="form-control" value="{{patient.email}}">
+                              <input class="form-control" ng-model="patient.email">
                               <br>
                               <label>Nome</label>
-                              <input class="form-control" value="{{patient.name}}">
+                              <input class="form-control" ng-model="patient.name">
                               <br>
                               <label>CPF</label>
-                              <input class="form-control" value="{{patient.cpf}}">
+                              <input class="form-control" ng-model="patient.cpf">
                               <br>
                               <label>Sexo</label>
                               <br>
@@ -83,19 +83,19 @@
 													<form role="form">
 															<div class="form-group">
 																<label>Email</label>
-																<input class="form-control" value="{{medic.email}}" placeholder="Ex.: joao.silva@exemplo.com">
+																<input class="form-control" ng-model="medic.email" placeholder="Ex.: joao.silva@exemplo.com">
 																<br>
 																<label>Nome</label>
-																<input class="form-control" value="{{medic.name}}" placeholder="Ex.: João Silva">
+																<input class="form-control" ng-model="medic.name" placeholder="Ex.: João Silva">
 																<br>
 																<label>CPF</label>
-																<input class="form-control" value="{{medic.cpf}}" placeholder="Ex.: 92877263512">
+																<input class="form-control" ng-model="medic.cpf" placeholder="Ex.: 92877263512">
 																<br>
 																<label>CRM</label>
-																<input class="form-control" value="{{medic.crm}}" placeholder="Ex.: 8827366">
+																<input class="form-control" ng-model="medic.crm" placeholder="Ex.: 8827366">
 																<br>
 																<label>Especialidade médica</label>
-																<input class="form-control" value="{{medic.specialty}}" placeholder="Ex.: Pediatria">
+																<input class="form-control" ng-model="medic.specialty" placeholder="Ex.: Pediatria">
 																<br>
 																<button type="submit" ng-click="save()" class="btn btn-info">Enviar dados</button>
 															</div>
@@ -108,19 +108,19 @@
 													<form role="form">
 															<div class="form-group">
 																<label>Email</label>
-																<input class="form-control" value="{{pharmacist.email}}" placeholder="Ex.: joao.silva@example.com">
+																<input class="form-control" ng-model="pharmacist.email" placeholder="Ex.: joao.silva@example.com">
 																<br>
 																<label>Nome</label>
-																<input class="form-control" value="{{pharmacist.name}}" placeholder="Ex.: João Silva">
+																<input class="form-control" ng-model="pharmacist.name" placeholder="Ex.: João Silva">
 																<br>
 																<label>CPF</label>
-																<input class="form-control" value="{{pharmacist.cpf}}" placeholder="Ex.: 08266253782">
+																<input class="form-control" ng-model="pharmacist.cpf" placeholder="Ex.: 08266253782">
 																<br>
 																<label>CRF</label>
-																<input class="form-control" value="{{pharmacist.crm}}" placeholder="Ex.: 882748">
+																<input class="form-control" ng-model="pharmacist.crf" placeholder="Ex.: 882748">
 																<br>
 																<label>Especialidade farmaceutica</label>
-																<input class="form-control" value="{{pharmacist.specialty}}" placeholder="Ex.: Narcóticos">
+																<input class="form-control" ng-model="pharmacist.specialty" placeholder="Ex.: Narcóticos">
 																<br>
 																<button type="submit" ng-click="save()" class="btn btn-info">Enviar dados</button>
 															</div>

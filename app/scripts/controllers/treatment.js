@@ -7,7 +7,8 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('TreatmentCtrl', ['$scope', function($scope) {
+  .controller('TreatmentCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+    console.log($rootScope.user);
     $scope.selectedTreatment = null
     $scope.user = {
       scope: "medic"
@@ -48,6 +49,36 @@ angular.module('sbAdminApp')
         pharmacist_id: 1,
         status: 0,
         comments: "Paciente tem se recuperado aos poucos da complicação, porém com sintomas ainda existentes.",
+        prescriptions: [
+          {
+            medication: "DIPIRONA 60MG CÁP.",
+            starting_at: "15/10/2015",
+            finishing_at: "30/10/2015",
+            frequency: 3,
+            medication_id: 2
+          },
+          {
+            medication: "NEOCESOL 1%.",
+            starting_at: "18/11/2015",
+            finishing_at: "21/11/2015",
+            frequency: 1,
+            medication_id: 2
+          }
+        ],
+        receipts: [
+          {
+            file_path: "/recept/1",
+            status: 0
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "Tratamento de pneumonia",
+        patient_id: 2,
+        pharmacist_id: 1,
+        status: 0,
+        comments: "Paciente em estado grave. Ficar em observação.",
         prescriptions: [
           {
             medication: "DIPIRONA 60MG CÁP.",

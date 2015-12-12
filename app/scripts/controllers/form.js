@@ -7,15 +7,11 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('FormCtrl', ['$scope', function($scope) {
-    $scope.patient = {
-      email: "john.doe@example.com",
-      name: "João Silva",
-      cpf: "70529428124",
-      gender: 2,
-      medical_history: "Diabetes tipo II, Alergia a ácaros, animais domésticos.",
-      weight:  "75,3"
-    };
+  .controller('FormCtrl', ['$scope', '$rootScope', function($scope, root) {
+    $scope.user = root.user;
+    $scope.patient = {};
+    $scope.pharmacist = {};
+    $scope.medic = {};
 
     $scope.save = function() {
       console.log("ahá");

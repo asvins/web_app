@@ -7,10 +7,12 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('RegistrationCtrl', ['$scope', function($scope) {
+  .controller('RegistrationCtrl', ['$scope','$state','$rootScope', function($scope,$state,$rootScope) {
     $scope.user = {
       scope: "patient"
     };
+    $scope.medic = {};
+    $scope.pharmacist = {};
 
     $scope.patient = {
       email: "john.doe@example.com",
@@ -22,6 +24,15 @@ angular.module('sbAdminApp')
     };
 
     $scope.save = function() {
-      console.log("ahá");
+      console.log($scope.medic);
+      $rootScope.user = $scope[$scope.user.scope];
+      $rootScope.user.scope = $scope.user.scope;
+      if ($scope.user.scope == "patient") {
+        //call endpoint
+        $state.go('dashboard.home');
+      } else {
+        //send email
+        $state.go('dashboard.pharmacist');
+      }
     };
 }]);

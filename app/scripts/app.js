@@ -9,6 +9,7 @@
  */
 angular
   .module('sbAdminApp', [
+    'angular-jwt',
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
@@ -118,7 +119,7 @@ angular
           }
         }
     })
-      .state('treatment',{
+      .state('dashboard.treatment',{
         templateUrl:'views/pages/treatment.html',
         controller:'TreatmentCtrl',
         url:'/treatment',
@@ -131,9 +132,31 @@ angular
           }
         }
     })
+      .state('dashboard.pharmacist', {
+        templateUrl:'views/pages/pharmacist.html',
+        controller:'PharmacistCtrl',
+        url:'/pharmacist',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return  $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/pharmacist.js']
+            })
+          }
+        }
+    })
       .state('login',{
         templateUrl:'views/pages/login.html',
-        url:'/login'
+        controller:'LoginCtrl',
+        url:'/login',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return  $ocLazyLoad.load({
+                name:'sbAdminApp',
+                files:['scripts/controllers/login.js']
+            })
+          }
+        }
     })
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',

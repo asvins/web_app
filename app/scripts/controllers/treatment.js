@@ -22,7 +22,17 @@ angular.module('sbAdminApp')
     $scope.showDetails = function (patient) {
       $scope.selectedTreatment = $scope.treatments.find(treatmentFinderForPatient(patient ));
     };
+    $scope.controls = {};
+    $scope.newTreatment = {};
+    $scope.controls.showExp = false;
 
+    $scope.addNewTPr = function () {
+      if ($scope.newTreatment.prescriptions == undefined) {
+        $scope.newTreatment.prescriptions = [{}];
+      } else {
+        $scope.newTreatment.prescriptions.push({})
+      }
+    }
 
     $scope.patients = [
       {
@@ -99,6 +109,10 @@ angular.module('sbAdminApp')
         ]
       }
     ];
+
+    $scope.newTreatment = function () {
+      $scope.controls.showExp = true;
+    }
 
     $scope.save = function() {
       console.log("ahá");

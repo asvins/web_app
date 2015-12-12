@@ -7,13 +7,23 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('FormCtrl', ['$scope', '$rootScope', function($scope, root) {
-    $scope.user = root.user;
+  .controller('FormCtrl', ['$scope', 'localStorageService', function($scope, ls) {
+    $scope.user = ls.get("user");
     $scope.patient = {};
     $scope.pharmacist = {};
     $scope.medic = {};
 
     $scope.save = function() {
-      console.log("ahá");
+      $http({
+        method: 'POST',
+        headers: ls.get("default-headers"),
+        data: $scope.user,
+        url: ls.get("urls").core + '/api/'
+      }).then(function successCallback(response) {
+
+      }, function errorCallback(response) {
+        console.log("Error login");
+        ls.remove("user");
+      });
     };
 }]);

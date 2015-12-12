@@ -14,13 +14,19 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'LocalStorageModule',
   ])
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider','localStorageServiceProvider', '$httpProvider', '$sceDelegateProvider', function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,localStorageService, $httpProvider, $sceDelegateProvider) {
 
     $ocLazyLoadProvider.config({
       debug:false,
       events:true,
     });
+    
+    $httpProvider.defaults.headers.common = {};
+    $httpProvider.defaults.headers.post = {};
+    $httpProvider.defaults.headers.put = {};
+    $httpProvider.defaults.headers.patch = {};
 
     $urlRouterProvider.otherwise('/login');
 

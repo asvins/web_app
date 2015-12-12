@@ -20,9 +20,8 @@ angular.module('sbAdminApp')
 
 
     $scope.showDetails = function (patient) {
-      $scope.selectedTreatment = $scope.treatments.find(treatmentFinderForPatient(patient ));
+      $scope.selectedTreatment = $scope.treatments.find(treatmentFinderForPatient(patient));
     };
-
 
     $scope.patients = [
       {

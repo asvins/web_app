@@ -15,8 +15,8 @@ angular.module('sbAdminApp')
       replace: true,
       scope: {
       },
-      controller:function($scope, $rootScope){
-        $scope.user = $rootScope.user;
+      controller:function($scope, $rootScope, localStorageService){
+        $scope.user = localStorageService.get("user");
         $scope.selectedMenu = 'dashboard';
         $scope.collapseVar = 0;
         $scope.multiCollapseVar = 0;

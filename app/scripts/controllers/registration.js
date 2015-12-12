@@ -7,7 +7,7 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('RegistrationCtrl', ['$scope','$state','$rootScope', function($scope,$state,$rootScope) {
+  .controller('RegistrationCtrl', ['$scope','$state','localStorageService', function($scope,$state,ls) {
     $scope.user = {
       scope: "patient"
     };
@@ -24,15 +24,12 @@ angular.module('sbAdminApp')
     };
 
     $scope.save = function() {
-      console.log($scope.medic);
-      $rootScope.user = $scope[$scope.user.scope];
-      $rootScope.user.scope = $scope.user.scope;
       if ($scope.user.scope == "patient") {
         //call endpoint
         $state.go('dashboard.home');
       } else {
         //send email
-        $state.go('dashboard.pharmacist');
+        //$state.go('dashboard.pharmacist');
       }
     };
 }]);

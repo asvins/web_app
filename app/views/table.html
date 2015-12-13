@@ -13,7 +13,7 @@
         </div>
         <div class="pannel-body" style="margin-left: 20px; margin-bottom: 15px;">
           <h3>
-            <b>Balanço atual:</b> {{balance.bill}}
+            <b>Balanço atual:</b> {{scope.box.value || 0 | currency}}
           </h3>
           <button type="button" class="btn btn-default btn-info" ng-click="pay()"><i class="fa fa-money"><strong>   Pagar</strong></i>
           </button>
@@ -26,8 +26,8 @@
         <h4>Dados sobre os pagamentos</h4>
       </div>
       <div class="panel-body">
-        <h3>Dados atuais</h3>
-        <div class="table-responsive">
+        <h3 ng-show="subscription.phone != ''">Dados atuais</h3>
+        <div class="table-responsive" ng-show="subscription.phone != ''">
           <table class="table table-bordered table-striped">
             <thead>
               <th>
@@ -45,16 +45,16 @@
             </thead>
             <tbody>
               <td>
-                {{balance.credit_card_number}}
+                {{maskCreditCard(subscription.credit_card)}}
               </td>
               <td>
-                {{balance.delivery_address}}
+                {{subscription.delivery_address}}
               </td>
               <td>
-                {{balance.address}}
+                {{subscription.address}}
               </td>
               <td>
-                {{balance.phone}}
+                {{subscription.phone}}
               </td>
             </tbody>
           </table>

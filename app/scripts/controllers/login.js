@@ -11,7 +11,11 @@ angular.module('sbAdminApp')
     ls.set("urls",
       {
         auth: "http://192.168.0.32:8001",
-        core: "http://192.168.0.32:8006",
+        notification: "http://192.168.0.32:8002",
+        warehouse: "http://192.168.0.32:8003",
+        subscription: "http://192.168.0.32:8004",
+        operations: "http://192.168.0.32:8005",
+        core: "http://192.168.0.32:8006"
       }
     );
     ls.set("default-headers", {'Content-Type': "application/json"});
@@ -20,29 +24,37 @@ angular.module('sbAdminApp')
       password: ""
     };
 
+    var redirectUser = function(user) {
+      if (user.scope == "patient") {
+        state.go('dashboard.home');
+      } else if (user.scope == "medic") {
+        state.go('dashboard.treatment');
+      } else if (user.scope == "pharmacist") {
+        state.go('dashboard.pharmacist');
+      }
+    }
+
+    if (ls.get('user') && ls.get('user').scope) {
+      console.log(ls.get('user'));
+      redirectUser(ls.get('user'));
+    }
+
     $scope.login = function() {
-      console.log($scope.user)
       $http({
         method: 'POST',
         headers: ls.get("default-headers"),
         data: $scope.user,
         url: ls.get("urls").auth + '/api/login'
       }).then(function successCallback(response) {
-        var user;
+        var user = {};
         user = jwt.decodeToken(response.data.access_token);
-        user.token = response.data.access_token;
+        user.email = user.sub;
         ls.set("user", user);
         var headers;
         headers = ls.get("default-headers");
         headers['Authorization'] = user.token;
         ls.set("default-headers", headers);
-        if (user.scope == "patient") {
-          state.go('dashboard.home');
-        } else if (user.scope == "medic") {
-          state.go('dashboard.treatment');
-        } else if (user.scope == "pharmacist") {
-          state.go('dashboard.pharmacist');
-        }
+        redirectUser(user);
       }, function errorCallback(response) {
         console.log("Error login");
         ls.remove("user");

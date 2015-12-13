@@ -7,10 +7,24 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('MainCtrl', function($scope,$position) {
+  .controller('MainCtrl', function($scope,$position,$http,localStorageService) {
     $scope.controls = {
       recentMedAdded: "false"
     };
+
+    var fetchAllMedications = function() {
+      $http({
+        method: 'GET',
+        headers: localStorageService.get('default-headers'),
+        url: localStorageService.get('urls').core + '/api/medications'
+      }).then(function successCallback(res) {
+        $scope.medications = res.data;
+        localStorageService.set("medications", $scope.medications);
+      }, function failureCallback(res) {
+        console.log("fetchAllMedications: Error fetching medications");
+      });
+    };
+    fetchAllMedications();
 
     $scope.showDetails = function (med) {
       $scope.curr_med = med;
@@ -22,6 +36,17 @@ angular.module('sbAdminApp')
             $scope.controls.recentMedAdded = 'false';
         })}, 3000);
       $scope.controls.recentMedAdded = 'true';
+    };
+
+    $scope.labelToString = function(e) {
+      if (e == 0) {
+        return "nenhuma";
+      } else if (e == 1) {
+        return "amarela";
+      } else if (e == 2) {
+        return "vermelha";
+      }
+      return "preta";
     };
 
     $scope.medications = [

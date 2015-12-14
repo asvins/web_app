@@ -8,7 +8,7 @@
                     <h4 class="timeline-title">{{e.title}}</h4>
                 </div>
                 <div class="timeline-body">
-                  {{e.description}}
+                  <ANY ng-bind-html="e.desc | unsafe"></ANY>
                 </div>
             </div>
         </li>

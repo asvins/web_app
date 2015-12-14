@@ -56,7 +56,7 @@
 										<label>Data de início</label>
 										<p class="form-control-static">{{selectedTreatment.start_date * 1000 | date:'dd/MM/yyyy'}}</p>
 										<label>Data de término</label>
-										<p class="form-control-static">{{selectedTreatment.finish * 1000 | date:'dd/MM/yyyy'}}</p>
+										<p class="form-control-static">{{selectedTreatment.finish_date * 1000 | date:'dd/MM/yyyy'}}</p>
 										<h3 class="text-muted">Prescrições</h3>
 										<div class="row" style="margin-left: 15px;">
 											<div class="panel panel-default col-lg-4 col-lg-offset-1" ng-repeat="pr in selectedTreatment.prescriptions">

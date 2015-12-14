@@ -152,7 +152,6 @@ angular.module('sbAdminApp')
         if ($scope.newTreatment.finish_date < e.finishing_at) {
           $scope.newTreatment.finish_date = e.finishing_at;
         }
-        console.log(e);
       });
 
       $http({

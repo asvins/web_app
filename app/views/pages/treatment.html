@@ -41,8 +41,7 @@
 						<form role="form">
 								<div class="form-group">
 										<label>Nome</label>
-										<input class="form-control" ng-model="selectedTreatment.title" placeholder="Ex.: Químioterapia">
-										<br>
+										<p class="form-control-static">{{selectedTreatment.title}}</p>
 										<label>Status</label>
 										<div class="radio">
 											<label>
@@ -54,15 +53,10 @@
 													<input type="radio" ng-model="selectedTreatment.status" id="status2" value="1"> Inativo
 											</label>
 										</div>
-										<label>Dosagem</label>
-										<br>
-										<input class="form-control" ng-model="selectedTreatment.dose" placeholder="Ex.: 3x ao dia">
 										<label>Data de início</label>
-										<br>
-										<input class="form-control" value="{{selectedTreatment.start_date * 1000 | date:'dd/MM/yyyy'}}" placeholder="Ex.: 25/10/2015">
+										<p class="form-control-static">{{selectedTreatment.start_date * 1000 | date:'dd/MM/yyyy'}}</p>
 										<label>Data de término</label>
-										<br>
-										<input class="form-control" value="{{selectedTreatment.finish_date * 1000 | date:'dd/MM/yyyy'}}" placeholder="Ex.: 30/10/2015">
+										<p class="form-control-static">{{selectedTreatment.finish * 1000 | date:'dd/MM/yyyy'}}</p>
 										<h3 class="text-muted">Prescrições</h3>
 										<div class="row" style="margin-left: 15px;">
 											<div class="panel panel-default col-lg-4 col-lg-offset-1" ng-repeat="pr in selectedTreatment.prescriptions">
@@ -78,15 +72,16 @@
 												</div>
 											</div>
 										</div>
-										<div class="row" style="margin-left: 10px;">
+										<!-- <div class="row" style="margin-left: 10px;">
 											<button type="submit" ng-click="save()" class="btn btn-info">Enviar dados</button>
-										</div>
+										</div> -->
 								</div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
+		<hr ng-show="controls.showExp == false">
 		<button type="submit" ng-click="openNewTreatment()" ng-show="controls.showExp == false" class="btn btn-default">Registrar tratamento</button>
 		<h1 ng-show="controls.showExp == true">Novo Tratamento</h1>
 		<form role="form" ng-show="controls.showExp == true">

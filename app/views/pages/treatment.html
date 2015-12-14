@@ -80,61 +80,104 @@
 										</div>
 										<div class="row" style="margin-left: 10px;">
 											<button type="submit" ng-click="save()" class="btn btn-info">Enviar dados</button>
-											<button type="submit" ng-click="newTreatment()" ng-show="controls.showExp == false" class="btn btn-default">Criar novo tratamento</button>
-										</div>
-								</div>
-						</form>
-						<hr ng-show="controls.showExp == true">
-						<h1 ng-show="controls.showExp == true">Novo Tratamento</h1>
-						<form role="form" ng-show="controls.showExp == true">
-								<div class="form-group">
-										<label>Nome</label>
-										<input class="form-control" ng-model="newTreatment.title" placeholder="Ex.: Químioterapia">
-										<br>
-										<label>Status</label>
-										<div class="radio">
-											<label>
-													<input type="radio" ng-model="newTreatment.status" id="status1" value="0" checked> Ativo
-											</label>
-										</div>
-										<div class="radio">
-											<label>
-													<input type="radio" ng-model="newTreatment.status" id="status2" value="1"> Inativo
-											</label>
-										</div>
-										<label>Comentários</label>
-										<br>
-										<textarea class="form-control" rows="4" ng-model="newTreatment.comments"></textarea>
-										<h3 class="text-muted">Prescrições</h3>
-										<div class="row" style="margin-left: 15px;">
-											<div class="panel panel-default col-lg-4 col-lg-offset-1" ng-repeat="pr in newTreatment.prescriptions">
-												<div class="panel-body">
-													<label>Medicação</label>
-													<input class="form-control" ng-model="pr.medication" placeholder="Ex.: DIPIRONA 60MG CÁP.">
-													<br>
-													<label>De</label>
-													<input class="form-control" ng-model="pr.starting_at" placeholder="Ex.: 25/10/2015">
-													<br>
-													<label>Até</label>
-													<input class="form-control" ng-model="pr.finishing_at" placeholder="Ex.: 30/10/2015">
-													<br>
-													<label>Vezes ao dia</label>
-													<input class="form-control" ng-model="pr.frequency" placeholder="Ex.: 3">
-											</div>
-										</div>
-										<div class="row" style="margin-left: 4px;">
-											<button type="submit" ng-click="addNewTPr()" class="btn btn-default">Adicionar prescição</button>
-										</div>
-										<hr>
-										<div class="row" style="margin-left: 10px;">
-											<button type="submit" ng-click="save()" class="btn btn-info">Enviar dados</button>
-
 										</div>
 								</div>
 						</form>
 					</div>
 				</div>
 			</div>
+		</div>
+		<button type="submit" ng-click="openNewTreatment()" ng-show="controls.showExp == false" class="btn btn-default">Registrar tratamento</button>
+		<h1 ng-show="controls.showExp == true">Novo Tratamento</h1>
+		<form role="form" ng-show="controls.showExp == true">
+				<div class="form-group">
+						<div class="">
+							<label>Paciente</label>
+							<angucomplete-ie8 id="new-treat-patient"
+																placeholder="Ex.: João Silva"
+																pause="100"
+																selected-object="newTreatment.patient"
+																title-field="name"
+																text-searching="Procurando paciente..."
+																local-data="patients"
+																text-no-results="Nenhum paciente encontrado"
+																search-fields="name"
+																minlength="1"
+																input-class="form-control"
+																focus-out="getPatID(newTreatment)"/>
+						</div>
+						<br>
+						<div class="">
+							<label>Farmaceutico Responsável</label>
+							<angucomplete-ie8 id="new-treat-pharmacist"
+																placeholder="Ex.: João Silva"
+																pause="100"
+																selected-object="newTreatment.pharmacist"
+																title-field="name"
+																text-searching="Procurando farmaceutirco..."
+																local-data="pharmacists"
+																text-no-results="Nenhum farmaceutico encontrado"
+																search-fields="name"
+																minlength="1"
+																input-class="form-control"
+																focus-out="getPhaID(newTreatment)"/>
+						</div>
+						<br>
+						<label>Nome</label>
+						<input class="form-control" ng-model="newTreatment.title" placeholder="Ex.: Químioterapia">
+						<br>
+						<label>Status</label>
+						<div class="radio">
+							<label>
+									<input type="radio" ng-model="newTreatment.status" id="status1" value="0" checked> Ativo
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+									<input type="radio" ng-model="newTreatment.status" id="status2" value="1"> Inativo
+							</label>
+						</div>
+						<h3 class="text-muted">Prescrições <button type="submit" style="margin-left: 30px;" ng-click="addNewTPr()" class="btn btn-default">Adicionar prescição</button></h3>
+						<div class="row">
+							<div class="col-lg-4 col-lg-offset-1 panel panel-default" ng-repeat="pr in newTreatment.prescriptions" style="margin-left: 15px;">
+								<div class="panel-body">
+									<div class="">
+										<label>Medicação</label>
+										<angucomplete-ie8 id="pr-medication"
+																			placeholder="Medicação"
+																			pause="100"
+																			selected-object="pr.medication"
+																			title-field="name"
+																			text-searching="Procurando medicamento..."
+																			local-data="medications"
+																			text-no-results="Nenhum medicamento encontrado"
+																			search-fields="name,active_agent"
+																			minlength="1"
+																			input-class="form-control"
+																			focus-out="getMedID(pr)"/>
+									</div>
+									<br>
+									<label>De</label>
+									<input class="form-control" ng-model="pr.starting_at" placeholder="MM/DD/AAAA Ex.: 10/25/2015">
+									<br>
+									<label>Até</label>
+									<input class="form-control" ng-model="pr.finishing_at" placeholder="Ex.: 10/30/2015">
+									<br>
+									<label>Vezes ao dia</label>
+									<select name="especialidade" ng-model="pr.frequency">
+										<option value="0">{{xEnumToString(0)}}</option>
+										<option value="1">{{xEnumToString(1)}}</option>
+										<option value="2">{{xEnumToString(2)}}</option>
+										<option value="3">{{xEnumToString(3)}}</option>
+										<option value="4">{{xEnumToString(4)}}</option>
+									</select>
+									<br>
+							</div>
+						</div>
+				</div>
+		</form>
+		<div class="row" style="margin-left: 10px;">
+			<button type="submit" ng-click="save()" class="btn btn-info">Cadastrar tratamento</button>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>

@@ -77,7 +77,15 @@
                           <input class="form-control" ng-model="user.crm" placeholder="Ex.: 8827366">
                           <br>
                           <label>Especialidade médica</label>
-                          <input class="form-control" ng-model="user.specialty" placeholder="Ex.: Pediatria">
+                          <br>
+                          <select name="especialidade" ng-model="user.specialty">
+                            <option value="0">{{mEnumToString(0)}}</option>
+                            <option value="1">{{mEnumToString(1)}}</option>
+                            <option value="2">{{mEnumToString(2)}}</option>
+                            <option value="3">{{mEnumToString(3)}}</option>
+                            <option value="4">{{mEnumToString(4)}}</option>
+                          </select>
+                          <br>
                           <br>
                           <button type="submit" ng-click="save()" class="btn btn-info">Enviar dados</button>
                         </div>

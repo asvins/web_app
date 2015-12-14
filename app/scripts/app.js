@@ -15,6 +15,7 @@ angular
     'ui.bootstrap',
     'angular-loading-bar',
     'LocalStorageModule',
+    'angucomplete-ie8',
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider','localStorageServiceProvider', '$httpProvider', '$sceDelegateProvider', function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,localStorageService, $httpProvider, $sceDelegateProvider) {
 
@@ -22,7 +23,7 @@ angular
       debug:false,
       events:true,
     });
-    
+
     $httpProvider.defaults.headers.common = {};
     $httpProvider.defaults.headers.post = {};
     $httpProvider.defaults.headers.put = {};

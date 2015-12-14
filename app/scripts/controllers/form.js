@@ -29,15 +29,44 @@ angular.module('sbAdminApp')
       }).then(function successCallback(response) {
         ls.set("user",merge($scope.user, response.data[0]));
         $scope.user = ls.get('user');
-        console.log($scope.user);
       }, function errorCallback(response) {
         console.log("Error fetching data");
       });
     }
     fetchUserData();
 
+    $scope.mEnumToString = function(e) {
+      switch (e) {
+        case 0:
+          return "Endocrinologista";
+        case 1:
+          return "Gastroenterologista";
+        case 2:
+          return "Ginecologista";
+        case 3:
+          return "Clínico Geral";
+        case 4:
+          return "Dermatologista";
+      }
+    }
+
+    $scope.mEnumToString = function(e) {
+      switch (e) {
+        case 0:
+          return "Endocrinologista";
+        case 1:
+          return "Gastroenterologista";
+        case 2:
+          return "Ginecologista";
+        case 3:
+          return "Clínico Geral";
+        case 4:
+          return "Dermatologista";
+      }
+    }
+
     $scope.save = function() {
-      console.log("SAVING USER");
+      $scope.user.specialty = parseInt($scope.user.specialty);
       $scope.user.gender = parseInt($scope.user.gender);
       $http({
         method: 'PUT',

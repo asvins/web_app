@@ -9,7 +9,62 @@
 angular.module('sbAdminApp')
   .controller('TreatmentCtrl', ['$scope', '$rootScope', '$http', 'localStorageService', function($scope, $rootScope, $http, ls) {
     $scope.selectedTreatment = null;
+    $scope.controls = {};
     $scope.user = ls.get('user');
+    $scope.medications = ls.get('medications');
+
+    var fetchAllPatients = function() {
+      $http({
+        method: 'GET',
+        headers: ls.get('default-headers'),
+        url: ls.get('urls').core + '/api/patient'
+      }).then(function successCallback(res) {
+        $scope.patients = res.data;
+      }, function failureCallback(res) {
+        console.log("fetchAllPatients: Error fetching patients");
+      });
+    };
+    fetchAllPatients();
+
+    var fetchAllPharmacists = function() {
+      $http({
+        method: 'GET',
+        headers: ls.get('default-headers'),
+        url: ls.get('urls').core + '/api/pharmacist'
+      }).then(function successCallback(res) {
+        $scope.pharmacists = res.data;
+      }, function failureCallback(res) {
+        console.log("fetchAllPharmacist: Error fetching pharmacist");
+      });
+    };
+    fetchAllPharmacists();
+
+    $scope.xEnumToString = function (e) {
+      switch (e) {
+        case 0:
+          return "De 4 em 4 horas";
+        case 1:
+          return "De 6 em 6 horas";
+        case 2:
+          return "De 8 em 8 horas";
+        case 3:
+          return "De 12 em 12 horas";
+        case 4:
+          return "De 24 em 24 horas";
+      }
+    }
+
+    $scope.getMedID = function (pr) {
+      pr.medication_id = pr.medication.originalObject.id;
+    }
+
+    $scope.getPatID = function (t) {
+      t.patient_id = t.patient.originalObject.id;
+    }
+
+    $scope.getPhaID = function (t) {
+      t.pharmacist_id = t.pharmacist.originalObject.id;
+    }
 
     var fetchUserData = function (treat, uid, scope) {
       $http({
@@ -51,8 +106,8 @@ angular.module('sbAdminApp')
           fetchUserData(t, t.patient_id, "patient");
           fetchUserData(t, t.pharmacist_id, "pharmacist");
           t.prescriptions.forEach(function (pr) {
-            p.medication = getMedication(pr);
-            if (p.receipt.ID == 0) { delete p['receipt'] }
+            pr.medication = getMedication(pr);
+            if (pr.receipt.ID == 0) { delete pr['receipt']; }
           });
         });
       }, function errorCallback(response) {
@@ -78,11 +133,40 @@ angular.module('sbAdminApp')
       }
     }
 
-    $scope.newTreatment = function () {
+    $scope.openNewTreatment = function () {
       $scope.controls.showExp = true;
     }
 
     $scope.save = function() {
-      console.log("ahá");
+      $scope.newTreatment.finish_date = 0;
+      $scope.newTreatment.start_date = Infinity;
+      $scope.newTreatment.status = parseInt($scope.newTreatment.status);
+      $scope.newTreatment.medic_id = ($scope.user.ID || $scope.user.id);
+      $scope.newTreatment.prescriptions.forEach(function(e) {
+        e.frequency = parseInt(e.frequency);
+        e.starting_at = new Date(e.starting_at).getTime()/1000;
+        if ($scope.newTreatment.start_date > e.starting_at) {
+          $scope.newTreatment.start_date = e.starting_at;
+        }
+        e.finishing_at = new Date(e.finishing_at).getTime()/1000;
+        if ($scope.newTreatment.finish_date < e.finishing_at) {
+          $scope.newTreatment.finish_date = e.finishing_at;
+        }
+        console.log(e);
+      });
+
+      $http({
+        method: 'POST',
+        headers: ls.get("default-headers"),
+        data: $scope.newTreatment,
+        url: ls.get("urls").core + '/api/treatments'
+      }).then(function successCallback(res) {
+        fetchTreatments();
+        $scope.controls.showExp = false;
+      }, function errorCallback(response) {
+        console.log("Error fetching data");
+      });
+
+      console.log($scope.newTreatment);
     };
 }]);

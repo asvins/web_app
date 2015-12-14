@@ -12,36 +12,21 @@
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Tipo</th>
-                        <th>Medicação</th>
-                        <th>Envio</th>
+                      <th>Tipo</th>
+                      <th>Medicação</th>
+                      <th>Frequencia</th>
+                      <th>Dosagem</th>
+                      <th>Duração</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="med in medications" ng-click="select(med)">
-                        <td>{{med.type}}</td>
-                        <td>{{med.name}}</td>
-                        <td>{{med.shipment_date}} <span ng-show="med.will_send == 'false'">(pausado)</span></td>
+                    <tr ng-repeat="p in treatment.prescriptions" ng-click="select(p)">
+                        <td>{{p.medication.type}}</td>
+                        <td>{{p.medication.name}}</td>
+                        <td>{{p.frequency}}</td>
+                        <td>{{p.medication.dosage}}</td>
+                        <td>De {{p.starting_at}} até {{p.finishing_at}}</td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="pannel-heading"><h4 style="margin-left: 10px;">Extras</h4></div>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>Tipo</th>
-                        <th>Medicação</th>
-                        <th>Envio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="med in extras" ng-click="select(med)">
-                      <td>{{med.type}}</td>
-                      <td>{{med.name}}</td>
-                      <td>{{med.shipment_date}} <span ng-show="med.will_send == 'false'">(pausado)</span></td>
-                  </tr>
                 </tbody>
             </table>
         </div>
@@ -50,22 +35,18 @@
   </div>
 
   <div class="col-lg-4">
-    <div class="panel panel-default" ng-show="selected_med != null">
+    <div class="panel panel-default" ng-show="selected_pre != null">
     <div class="pannel-heading"><h4 style="margin-left: 15px; margin-bottom: 0;">Detalhes</h4></div>
     <div class="panel-body">
-      <button type="button" ng-show="selected_med.will_send == 'true'" ng-click="toggleSend(selected_med)" class="btn btn-default btn-info"><i class="fa fa-pause"><span> Pausar envio</span></i></button>
-      <button type="button" ng-show="selected_med.will_send == 'false'" ng-click="toggleSend(selected_med)" class="btn btn-default btn-warning"><i class="fa fa-play"><span> Despausar envio</span></i></button>
-      <p style="margin-top: 10px; margin-bottom: 10px;"><b>nome:</b> {{selected_med.name}}</p>
-      <p style="margin-top: 10px; margin-bottom: 10px;"><b>dosagem:</b> {{selected_med.dosage}}</p>
-      <p style="margin-top: 10px; margin-bottom: 10px;"><b>tipo:</b> {{selected_med.type}}</p>
-      <p style="margin-top: 10px; margin-bottom: 10px;"><b>responsável:</b> {{selected_med.supervisor}}</p>
-      <p style="margin-top: 10px; margin-bottom: 10px;"><b>registro:</b> {{selected_med.register}}</p>
-      <p style="margin-top: 10px; margin-bottom: 10px;"><a href="{{selected_med.bula}}" target="blank">Baixar bula</a></p>
-      <div class="panel-footer" ng-show="selected_med.need_prescription == 'true'" style="margin-left: -15px; margin-top: -10px; margin-bottom: -15px; margin-right: -15px;">
-        <span class="text-danger" ng-show="selected_med.receipt_uploaded == 'false'">Este medicamento exige receita médica!<br><span class="text-muted"> Fazer upload</span></span> 
-        <input ng-show="selected_med.receipt_uploaded == 'false'" type="file">
-        <span class="text-success" ng-show="selected_med.receipt_uploaded == 'true'">Sua receita para este medicamento já foi aprovada!</span><br>
-
+      <p style="margin-top: 10px; margin-bottom: 10px;"><b>nome:</b> {{selected_pre.medication.name}}</p>
+      <p style="margin-top: 10px; margin-bottom: 10px;"><b>dosagem:</b> {{selected_pre.medication.dosage}}</p>
+      <p style="margin-top: 10px; margin-bottom: 10px;"><b>tipo:</b> {{selected_pre.medication.type}}</p>
+      <p style="margin-top: 10px; margin-bottom: 10px;"><b>registro:</b> {{selected_pre..medication.br_register}}</p>
+      <p style="margin-top: 10px; margin-bottom: 10px;"><a href="{{selected_pre.medication.bula}}" target="blank">Baixar bula</a></p>
+      <div class="panel-footer" ng-show="selected_pre.medication.receipt_ok == 1" style="margin-left: -15px; margin-top: -10px; margin-bottom: -15px; margin-right: -15px;">
+        <span class="text-danger" ng-show="selected_pre.receipt.status == 0">Este medicamento exige receita médica!<br><span class="text-muted"> Fazer upload</span></span>
+        <input ng-show="selected_pre.receipt_uploaded == 'false'" type="file">
+        <span class="text-success" ng-show="selected_pre.receipt.status == 1">Sua receita para este medicamento já foi aprovada!</span><br>
       </div>
     </div>
   </div>

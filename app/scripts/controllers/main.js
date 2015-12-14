@@ -34,8 +34,7 @@ angular.module('sbAdminApp')
         headers: localStorageService.get('default-headers'),
         url: localStorageService.get('urls').core + '/api/patient/' + ($scope.user.ID || $scope.user.id) + '/feed'
       }).then(function successCallback(res) {
-        console.log(res.data);
-        $scope.events = res.data;
+        $scope.events = res.data.reverse();
       }, function failureCallback(res) {
         console.log("fetchFeedEvents: Error fetching feed");
       });

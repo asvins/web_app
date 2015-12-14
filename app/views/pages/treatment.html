@@ -21,9 +21,9 @@
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                    <tr ng-repeat="p in patients" ng-click="showDetails(p)">
-			                        <td>{{p.id}}</td>
-			                        <td>{{p.name}}</td>
+			                    <tr ng-repeat="t in treatments" ng-click="showDetails(t)">
+			                        <td>{{t.patient.id}}</td>
+			                        <td>{{t.patient.name}}</td>
 			                    </tr>
 			                </tbody>
 			            </table>
@@ -41,7 +41,7 @@
 						<form role="form">
 								<div class="form-group">
 										<label>Nome</label>
-										<input class="form-control" value="{{selectedTreatment.title}}" placeholder="Ex.: Químioterapia">
+										<input class="form-control" ng-model="selectedTreatment.title" placeholder="Ex.: Químioterapia">
 										<br>
 										<label>Status</label>
 										<div class="radio">
@@ -54,21 +54,27 @@
 													<input type="radio" ng-model="selectedTreatment.status" id="status2" value="1"> Inativo
 											</label>
 										</div>
-										<label>Comentários</label>
+										<label>Dosagem</label>
 										<br>
-										<textarea class="form-control" rows="4">{{selectedTreatment.comments}}</textarea>
+										<input class="form-control" ng-model="selectedTreatment.dose" placeholder="Ex.: 3x ao dia">
+										<label>Data de início</label>
+										<br>
+										<input class="form-control" value="{{selectedTreatment.start_date * 1000 | date:'dd/MM/yyyy'}}" placeholder="Ex.: 25/10/2015">
+										<label>Data de término</label>
+										<br>
+										<input class="form-control" value="{{selectedTreatment.finish_date * 1000 | date:'dd/MM/yyyy'}}" placeholder="Ex.: 30/10/2015">
 										<h3 class="text-muted">Prescrições</h3>
 										<div class="row" style="margin-left: 15px;">
 											<div class="panel panel-default col-lg-4 col-lg-offset-1" ng-repeat="pr in selectedTreatment.prescriptions">
 												<div class="panel-heading" style="margin-left: -15px; margin-right: -15px;">
-													{{pr.medication}}
+													{{pr.medication.name}}
 												</div>
 												<div class="panel-body">
-													<strong>Validade:</strong> De {{pr.starting_at}} até {{pr.finishing_at}}.
+													<strong>Validade:</strong> De {{pr.starting_at * 1000 | date:'dd/MM/yyyy'}} até {{pr.finishing_at * 1000 | date:'dd/MM/yyyy'}}.
 													<br>
 													<strong>Frequêcia:</strong> {{pr.frequency}} vez(es) ao dia.
 													<br>
-													<a href="http://www.receipts-templates.com/wp-content/uploads/2014/12/Medical-receipt.png" target="_blank">Baixar receita atrelada.</a>
+													<a href="{{receiptURL(pr.id, pr.receipt.ID)}}" ng-show="pr.receipt != null" target="_blank">Baixar receita atrelada.</a>
 												</div>
 											</div>
 										</div>

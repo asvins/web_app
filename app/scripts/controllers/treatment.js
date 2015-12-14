@@ -7,21 +7,65 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('TreatmentCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
-    $scope.selectedTreatment = null
+  .controller('TreatmentCtrl', ['$scope', '$rootScope', '$http', 'localStorageService', function($scope, $rootScope, $http, ls) {
+    $scope.selectedTreatment = null;
+    $scope.user = ls.get('user');
 
-    var treatmentFinderForPatient = function (patient) {
-      return function (treatment, index, arr) {
-        if (treatment.id == patient.treatment_id) {
-          return treatment;
-        }
-      }
+    var fetchUserData = function (treat, uid, scope) {
+      $http({
+        method: 'GET',
+        headers: ls.get("default-headers"),
+        data: $scope.user,
+        params: {eq: "id|" + uid},
+        url: ls.get("urls").core + '/api/' + scope
+      }).then(function successCallback(response) {
+        treat[scope] = response.data[0];
+      }, function errorCallback(response) {
+        console.log("Error fetching data");
+      });
+    };
+
+    $scope.receiptURL = function (prId, recId) {
+      return ls.get('urls').core + '/api/receipt/' + prId + '?receipt_id=' + recId;
     }
 
-
-    $scope.showDetails = function (patient) {
-      $scope.selectedTreatment = $scope.treatments.find(treatmentFinderForPatient(patient ));
+    var getMedication = function (pr) {
+      var meds = ls.get('medications');
+      return meds.find(function(elem, index, arr){
+        if (elem.id == pr.medication_id) {
+          return elem;
+        }
+      });
     };
+
+    var fetchTreatments = function () {
+      $http({
+        method: 'GET',
+        headers: ls.get("default-headers"),
+        data: $scope.user,
+        params: {eq: "medic_id|" + ($scope.user.ID || $scope.user.id)},
+        url: ls.get("urls").core + '/api/treatments'
+      }).then(function successCallback(response) {
+        $scope.treatments = response.data;
+        $scope.treatments.forEach(function (t) {
+          fetchUserData(t, t.patient_id, "patient");
+          fetchUserData(t, t.pharmacist_id, "pharmacist");
+          t.prescriptions.forEach(function (pr) {
+            p.medication = getMedication(pr);
+            if (p.receipt.ID == 0) { delete p['receipt'] }
+          });
+        });
+      }, function errorCallback(response) {
+        console.log("Error fetching data");
+      });
+    }
+    fetchTreatments();
+
+
+    $scope.showDetails = function (t) {
+      $scope.selectedTreatment = t;
+    };
+
     $scope.controls = {};
     $scope.newTreatment = {};
     $scope.controls.showExp = false;
@@ -30,85 +74,9 @@ angular.module('sbAdminApp')
       if ($scope.newTreatment.prescriptions == undefined) {
         $scope.newTreatment.prescriptions = [{}];
       } else {
-        $scope.newTreatment.prescriptions.push({})
+        $scope.newTreatment.prescriptions.push({});
       }
     }
-
-    $scope.patients = [
-      {
-        name: "João Silva",
-        id:1,
-        treatment_id: 1
-      },
-      {
-        name: "Rafael Leite",
-        id:2,
-        treatment_id: 2
-      }
-    ];
-
-    $scope.treatments = [
-      {
-        id: 1,
-        title: "Tratamento de varíola",
-        patient_id: 2,
-        pharmacist_id: 1,
-        status: 0,
-        comments: "Paciente tem se recuperado aos poucos da complicação, porém com sintomas ainda existentes.",
-        prescriptions: [
-          {
-            medication: "DIPIRONA 60MG CÁP.",
-            starting_at: "15/10/2015",
-            finishing_at: "30/10/2015",
-            frequency: 3,
-            medication_id: 2
-          },
-          {
-            medication: "NEOCESOL 1%.",
-            starting_at: "18/11/2015",
-            finishing_at: "21/11/2015",
-            frequency: 1,
-            medication_id: 2
-          }
-        ],
-        receipts: [
-          {
-            file_path: "/recept/1",
-            status: 0
-          }
-        ]
-      },
-      {
-        id: 2,
-        title: "Tratamento de pneumonia",
-        patient_id: 2,
-        pharmacist_id: 1,
-        status: 0,
-        comments: "Paciente em estado grave. Ficar em observação.",
-        prescriptions: [
-          {
-            medication: "DIPIRONA 60MG CÁP.",
-            starting_at: "15/10/2015",
-            finishing_at: "30/10/2015",
-            frequency: 3,
-            medication_id: 2
-          },
-          {
-            medication: "NEOCESOL 1%.",
-            starting_at: "18/11/2015",
-            finishing_at: "21/11/2015",
-            frequency: 1,
-            medication_id: 2
-          }
-        ],
-        receipts: [
-          {
-            file_path: "/recept/1",
-            status: 0
-          }
-        ]
-      }
-    ];
 
     $scope.newTreatment = function () {
       $scope.controls.showExp = true;

@@ -7,12 +7,33 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('ChartCtrl', ['$scope', '$timeout','localStorageService','$http', function ($scope, $timeout, localStorageService, $http) {
+  .controller('ChartCtrl', ['$scope', '$timeout','localStorageService','$http','Upload', function ($scope, $timeout, localStorageService, $http, Upload) {
     $scope.selected_med = null;
     $scope.user = localStorageService.get('user');
     $scope.medications = localStorageService.get('medications');
-    $scope.select = function (med) {
-      $scope.selected_med = med
+    $scope.select = function (p) {
+      $scope.selected_pre = p;
+    };
+
+    $scope.file = null;
+
+    var fetchRecipe = function(pr) {
+      $http({
+        method: 'GET',
+        headers: localStorageService.get('default-headers'),
+        url: localStorageService.get('urls').core + '/api/receipt/' + pr.id
+      }).then(function successCallback(res) {
+        pr.receipt = res.data[0];
+      }, function failureCallback(res) {
+        console.log("fetchRecipe: Error fetching patients");
+      });
+    };
+
+    $scope.receiptURL = function(pr) {
+      if (!pr || !pr.receipt) {
+        return "/404.html"
+      }
+      return localStorageService.get('urls').core + '/api/receipt/' + pr.id + '?receipt_id=' + pr.receipt.id;
     };
 
     var fetchMyTreatment = function() {
@@ -24,6 +45,8 @@ angular.module('sbAdminApp')
       }).then(function successCallback(res) {
         $scope.treatment = res.data[0];
         $scope.treatment.prescriptions.forEach(function (p) {
+          if (p.receipt.ID == 0) { delete p['receipt']; }
+          fetchRecipe(p);
           p.medication = $scope.medications.find(function(elem) {
             if (p.medication_id == elem.id) {
               return elem;
@@ -36,45 +59,13 @@ angular.module('sbAdminApp')
     };
     fetchMyTreatment();
 
-
-    $scope.medications = [
-     {
-       id: 1,
-       type: "pomada",
-       need_prescription: "true",
-       name: "DULOXETINA DR 60mg CAP",
-       shipment_date: "24/09",
-       receipt_uploaded: "true",
-       will_send: "true",
-       dosage: "1 - 8:30, 2 - 16:30",
-       bula: "http://www.sanofi.com.br/produtos/notice_aas.pdf",
-       supervisor: "João Silva",
-       register: "099742883"
-     },
-     {
-       id: 2,
-       type: "cápsula",
-       need_prescription: "true",
-       receipt_uploaded: "false",
-       name: "FENOFIBRATO 250mg CAP",
-       shipment_date: "24/09",
-       will_send: "true",
-       dosage: "1 - 8:30, 2 - 16:30",
-       bula: "http://www.sanofi.com.br/produtos/notice_aas.pdf",
-       supervisor: "João Silva",
-       register: "099742883"
-     },
-     {
-       id: 3,
-       type: "tablete",
-       need_prescription: "false",
-       name: "LISINOPRIL 10mg TAB",
-       shipment_date: "24/09",
-       will_send: "true",
-       dosage: "1 - 8:30, 2 - 16:30",
-       bula: "http://www.sanofi.com.br/produtos/notice_aas.pdf",
-       supervisor: "João Silva",
-       register: "099742883"
-     }
-    ];
+    $scope.upload = function(prId) {
+        Upload.upload({
+            url: localStorageService.get('urls').core + '/api/receipt/' + prId,
+            data: {receipt: $scope.file}
+        }).then(function (resp) {
+            $scope.file = null;
+            fetchMyTreatment();
+        });
+      };
     }]);

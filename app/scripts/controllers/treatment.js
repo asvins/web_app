@@ -13,6 +13,19 @@ angular.module('sbAdminApp')
     $scope.user = ls.get('user');
     $scope.medications = ls.get('medications');
 
+    var fetchRecipe = function(pr) {
+      $http({
+        method: 'GET',
+        headers: localStorageService.get('default-headers'),
+        url: localStorageService.get('urls').core + '/api/receipt/' + pr.id
+      }).then(function successCallback(res) {
+        pr.receipt = res.data[0];
+        console.log(res.data);
+      }, function failureCallback(res) {
+        console.log("fetchRecipe: Error fetching patients");
+      });
+    };
+
     var fetchAllPatients = function() {
       $http({
         method: 'GET',
@@ -106,8 +119,8 @@ angular.module('sbAdminApp')
           fetchUserData(t, t.patient_id, "patient");
           fetchUserData(t, t.pharmacist_id, "pharmacist");
           t.prescriptions.forEach(function (pr) {
+            if (pr.receipt.id == 0) { delete pr['receipt']; }
             pr.medication = getMedication(pr);
-            if (pr.receipt.ID == 0) { delete pr['receipt']; }
           });
         });
       }, function errorCallback(response) {
@@ -165,7 +178,5 @@ angular.module('sbAdminApp')
       }, function errorCallback(response) {
         console.log("Error fetching data");
       });
-
-      console.log($scope.newTreatment);
     };
 }]);

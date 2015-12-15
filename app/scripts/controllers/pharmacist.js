@@ -7,97 +7,50 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('PharmacistCtrl', ['$scope', function($scope) {
-    $scope.selectedTreatment = null
+  .controller('PharmacistCtrl', ['$scope', '$http','localStorageService', function($scope, $http,localStorageService) {
+    $scope.selectedTreatment = null;
+    $scope.user = localStorageService.get('user');
 
-    var treatmentFinderForPatient = function (patient) {
-      return function (treatment, index, arr) {
-        if (treatment.id == patient.treatment_id) {
-          return treatment;
-        }
-      }
-    }
+    var fetchAllPatients = function() {
+      $http({
+        method: 'GET',
+        headers: localStorageService.get('default-headers'),
+        url: localStorageService.get('urls').core + '/api/patient'
+      }).then(function successCallback(res) {
+        $scope.patients = res.data;
+      }, function failureCallback(res) {
+        console.log("fetchAllPatients: Error fetching patients");
+      });
+    };
+    fetchAllPatients();
 
+    var fetchMyTreatments = function() {
+      $http({
+        method: 'GET',
+        headers: localStorageService.get('default-headers'),
+        params: {eq: "pharmacist_id|" + ($scope.user.ID || $scope.user.id)},
+        url: localStorageService.get('urls').core + '/api/treatments'
+      }).then(function successCallback(res) {
+        $scope.treatment = res.data[0];
+        $scope.treatment.prescriptions.forEach(function (p) {
+          if (p.receipt.id == 0) { delete p['receipt']; }
+          fetchRecipe(p);
+          p.medication = $scope.medications.find(function(elem) {
+            if (p.medication_id == elem.id) {
+              return elem;
+            }
+          });
+          console.log($scope.treatment);
+        });
+      }, function failureCallback(res) {
+        console.log("fetchMyTreatments: Error fetching treatments");
+      });
+    };
+    fetchMyTreatments();
 
     $scope.showDetails = function (patient) {
       $scope.selectedTreatment = $scope.treatments.find(treatmentFinderForPatient(patient));
     };
-
-    $scope.patients = [
-      {
-        name: "João Silva",
-        id:1,
-        treatment_id: 1
-      },
-      {
-        name: "Rafael Leite",
-        id:2,
-        treatment_id: 2
-      }
-    ];
-
-    $scope.treatments = [
-      {
-        id: 1,
-        title: "Tratamento de varíola",
-        patient_id: 2,
-        pharmacist_id: 1,
-        status: 0,
-        comments: "Paciente tem se recuperado aos poucos da complicação, porém com sintomas ainda existentes.",
-        prescriptions: [
-          {
-            medication: "DIPIRONA 60MG CÁP.",
-            starting_at: "15/10/2015",
-            finishing_at: "30/10/2015",
-            frequency: 3,
-            medication_id: 2
-          },
-          {
-            medication: "NEOCESOL 1%.",
-            starting_at: "18/11/2015",
-            finishing_at: "21/11/2015",
-            frequency: 1,
-            medication_id: 2
-          }
-        ],
-        receipts: [
-          {
-            file_path: "/recept/1",
-            status: 0
-          }
-        ]
-      },
-      {
-        id: 2,
-        title: "Tratamento de pneumonia",
-        patient_id: 2,
-        pharmacist_id: 1,
-        status: 0,
-        comments: "Paciente em estado grave. Ficar em observação.",
-        prescriptions: [
-          {
-            medication: "DIPIRONA 60MG CÁP.",
-            starting_at: "15/10/2015",
-            finishing_at: "30/10/2015",
-            frequency: 3,
-            medication_id: 2
-          },
-          {
-            medication: "NEOCESOL 1%.",
-            starting_at: "18/11/2015",
-            finishing_at: "21/11/2015",
-            frequency: 1,
-            medication_id: 2
-          }
-        ],
-        receipts: [
-          {
-            file_path: "/recept/1",
-            status: 0
-          }
-        ]
-      }
-    ];
 
     $scope.save = function() {
       console.log("ahá");

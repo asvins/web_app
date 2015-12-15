@@ -16,6 +16,7 @@ angular
     'angular-loading-bar',
     'LocalStorageModule',
     'angucomplete-ie8',
+    'ngFileUpload',
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider','localStorageServiceProvider', '$httpProvider', '$sceDelegateProvider', function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,localStorageService, $httpProvider, $sceDelegateProvider) {
 

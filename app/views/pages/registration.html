@@ -1,28 +1,30 @@
 <div class="container-fluid" ng-controller="RegistrationCtrl">
 	<div class="row">
 		<div class="col-lg-12">
-			<h2 class="page-header">
-				Cadastro
-				<br>
-				<small>
+			<div class="col-lg-8">
+				<h2 class="page-header">
+					Cadastro
+					<br>
+					<small>
 						Você é um:
-					<div class="radio-inline">
-						<label>
-							<input type="radio" ng-model="user.scope" id="scope1" value="patient" checked> Paciente
-						</label>
-					</div>
-					<div class="radio-inline">
-						<label>
-							<input type="radio" ng-model="user.scope" id="scope2" value="medic"> Médico
-						</label>
-					</div>
-					<div class="radio-inline">
-						<label>
-							<input type="radio" ng-model="user.scope" id="scope3" value="pharmacist"> Farmaceutico
-						</label>
-					</div>
-				</small>
-			</h1>
+						<div class="radio-inline">
+							<label>
+								<input type="radio" ng-model="user.scope" id="scope1" value="patient" checked> Paciente
+							</label>
+						</div>
+						<div class="radio-inline">
+							<label>
+								<input type="radio" ng-model="user.scope" id="scope2" value="medic"> Médico
+							</label>
+						</div>
+						<div class="radio-inline">
+							<label>
+								<input type="radio" ng-model="user.scope" id="scope3" value="pharmacist"> Farmaceutico
+							</label>
+						</div>
+					</small>
+				</h2>
+			</div>
 		</div>
 		<div class="row">
 		    <div class="col-lg-12">

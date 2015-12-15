@@ -78,18 +78,7 @@ angular.module('sbAdminApp')
         headers: localStorageService.get('default-headers'),
         url: localStorageService.get('urls').core + '/api/treatments/' + t.id + '/validate'
       }).then(function successCallback(res) {
-        $scope.treatments = res.data;
-        $scope.treatments.forEach(function (t) {
-          t.prescriptions.forEach(function (p) {
-            if (p.receipt.id == 0) { delete p['receipt']; }
-            fetchRecipe(p);
-            p.medication = $scope.medications.find(function(elem) {
-              if (p.medication_id == elem.id) {
-                return elem;
-              }
-            });
-          });
-        });
+        fetchMyTreatments();
       }, function failureCallback(res) {
         console.log("fetchMyTreatments: Error fetching treatments");
       });

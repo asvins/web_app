@@ -41,14 +41,14 @@
       <p style="margin-top: 10px; margin-bottom: 10px;"><b>nome:</b> {{selected_pre.medication.name}}</p>
       <p style="margin-top: 10px; margin-bottom: 10px;"><b>principio atívo:</b> {{selected_pre.medication.active_agent}}</p>
       <p style="margin-top: 10px; margin-bottom: 10px;"><b>dosagem:</b> {{selected_pre.medication.dosage}}</p>
-      <p style="margin-top: 10px; margin-bottom: 10px;"><b>tipo:</b> {{selected_pre.medication.type}}</p>
+      <p style="margin-top: 10px; margin-bottom: 10px;"><b>tipo:</b> {{medicationString(selected_pre.medication.type)}}</p>
       <p style="margin-top: 10px; margin-bottom: 10px;"><b>registro:</b> {{selected_pre.medication.br_register}}</p>
       <p style="margin-top: 10px; margin-bottom: 10px;"><a href="{{selected_pre.medication.bula}}" target="blank">Baixar bula</a></p>
       <div class="panel-footer" ng-show="selected_pre.medication.receipt_ok == 1" style="margin-left: -15px; margin-top: -10px; margin-bottom: -15px; margin-right: -15px;">
         <span class="text-danger" ng-show="selected_pre.receipt_id == 0">Este medicamento exige receita médica!</span>
-        <div class="button btn btn-default" name="receipt" ng-model="file" ngf-select ng-show="1 || file == null && selected_pre.receipt_id == 0" type="file">Selecionar Imagem</div>
+        <div class="button btn btn-default" name="receipt" ng-model="file" ngf-select ng-show="file == null && selected_pre.receipt_id == 0" type="file">Selecionar Imagem</div>
         <div class="button btn btn-warning" ng-click="upload(selected_pre.id)" ng-show="file != null">Fazer Upload</div>
-        <span class="text-success" ng-show="selected_pre.receipt.file_path != ''">Sua receita para este medicamento já foi enviada com sucesso!<a href="{{receiptURL(selected_pre)}}" target="_blank"> Ver receita</a></span><br>
+        <span class="text-success" ng-show="selected_pre.receipt_id != 0">Sua receita para este medicamento já foi enviada com sucesso! <a href="{{receiptURL(selected_pre)}}" target="_blank">Ver receita</a></span><br>
       </div>
     </div>
   </div>

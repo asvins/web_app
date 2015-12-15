@@ -43,16 +43,18 @@
 										<label>Nome</label>
 										<p class="form-control-static">{{selectedTreatment.title}}</p>
 										<label>Status</label>
-										<div class="radio">
-											<label>
-													<input type="radio" ng-model="selectedTreatment.status" id="status1" value="0" checked> Ativo
-											</label>
-										</div>
-										<div class="radio">
-											<label>
-													<input type="radio" ng-model="selectedTreatment.status" id="status2" value="1"> Inativo
-											</label>
-										</div>
+										<fieldset disabled>
+											<div class="radio">
+												<label>
+														<input type="radio" ng-model="selectedTreatment.status" id="status1" value="0"> Ativo
+												</label>
+											</div>
+											<div class="radio">
+												<label>
+														<input type="radio" ng-model="selectedTreatment.status" id="status2" value="1" checked> Inativo
+												</label>
+											</div>
+										</fieldset>
 										<label>Data de início</label>
 										<p class="form-control-static">{{selectedTreatment.start_date * 1000 | date:'dd/MM/yyyy'}}</p>
 										<label>Data de término</label>
@@ -66,7 +68,7 @@
 												<div class="panel-body">
 													<strong>Validade:</strong> De {{pr.starting_at * 1000 | date:'dd/MM/yyyy'}} até {{pr.finishing_at * 1000 | date:'dd/MM/yyyy'}}.
 													<br>
-													<strong>Frequêcia:</strong> {{pr.frequency}} vez(es) ao dia.
+													<strong>Frequêcia:</strong> {{xEnumToString(pr.frequency)}}
 													<br>
 													<a href="{{receiptURL(pr.id, pr.receipt.id)}}" ng-show="pr.receipt != null" target="_blank">Baixar receita atrelada.</a>
 												</div>

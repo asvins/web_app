@@ -148,6 +148,7 @@ angular.module('sbAdminApp')
 
     $scope.openNewTreatment = function () {
       $scope.controls.showExp = true;
+      $scope.newTreatment.status = 1;
     }
 
     $scope.save = function() {
@@ -157,11 +158,11 @@ angular.module('sbAdminApp')
       $scope.newTreatment.medic_id = ($scope.user.ID || $scope.user.id);
       $scope.newTreatment.prescriptions.forEach(function(e) {
         e.frequency = parseInt(e.frequency);
-        e.starting_at = new Date(e.starting_at).getTime()/1000;
+        e.starting_at = new Date(e.starting_at).getTime()/1000 + new Date().getHours()*3600 + ((new Date().getMinutes() > 30) ? 3600 : 0);
         if ($scope.newTreatment.start_date > e.starting_at) {
           $scope.newTreatment.start_date = e.starting_at;
         }
-        e.finishing_at = new Date(e.finishing_at).getTime()/1000;
+        e.finishing_at = new Date(e.finishing_at).getTime()/1000 + new Date().getHours()*3600;
         if ($scope.newTreatment.finish_date < e.finishing_at) {
           $scope.newTreatment.finish_date = e.finishing_at;
         }

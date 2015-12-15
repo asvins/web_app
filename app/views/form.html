@@ -110,7 +110,13 @@
                             <input class="form-control" ng-model="user.crf" placeholder="Ex.: 882748">
                             <br>
                             <label>Especialidade farmaceutica</label>
-                            <input class="form-control" ng-model="user.specialty" placeholder="Ex.: Narcóticos">
+                            <select name="especialidade" ng-model="user.specialty">
+                              <option value="0">{{pEnumToString(0)}}</option>
+                              <option value="1">{{pEnumToString(1)}}</option>
+                              <option value="2">{{pEnumToString(2)}}</option>
+                              <option value="3">{{pEnumToString(3)}}</option>
+                              <option value="4">{{pEnumToString(4)}}</option>
+                            </select>
                             <br>
                             <button type="submit" ng-click="save()" class="btn btn-info">Enviar dados</button>
                           </div>

@@ -13,11 +13,11 @@ angular.module('sbAdminApp')
     }
 
     $scope.update_data = {};
+    $scope.value = "Pagamento indisponível. Por favor atualize seus dados";
 
     var user = localStorageService.get("user");
 
     $scope.subscription = {
-      bill: 103.21,
       phone: "",
       credit_card: "",
       address: "",
@@ -35,6 +35,19 @@ angular.module('sbAdminApp')
       };
     }
 
+    var fetchPaymentStatus = function() {
+      $http({
+        method: 'GET',
+        headers: localStorageService.get('default-headers'),
+        url: localStorageService.get('urls').subscription + '/api/subscriber/' + user.id + '/paymentstatus'
+      }).then(function successCallback(res) {
+        $scope.payment_status = 1;
+      }, function failureCallback(res) {
+        $scope.payment_status = 0;
+      });
+    };
+    fetchPaymentStatus();
+
     var fetchAccountData = function() {
       $http({
         method: 'GET',
@@ -50,6 +63,15 @@ angular.module('sbAdminApp')
     };
     fetchAccountData();
 
+    var getCurrentBox = function(boxes) {
+      return boxes.filter(function(elem) {
+        return elem.status == 0;
+      })
+      .sort(function(a, b) {
+        return a.start_date - b.start_date;
+      })[0];
+    }
+
     var fetchBalance = function() {
       $http({
         method: 'GET',
@@ -57,8 +79,7 @@ angular.module('sbAdminApp')
         headers: localStorageService.get('default-headers'),
         url: localStorageService.get('urls').operations + '/api/box'
       }).then(function successCallback(res) {
-        $scope.box = res.data[0];
-        localStorageService.set("box", $scope.subscription);
+        $scope.box = getCurrentBox(res.data);
       }, function failureCallback(res) {
         console.log("fetchBalance: Error fetching boxes");
       });
@@ -87,13 +108,13 @@ angular.module('sbAdminApp')
       console.log("Pagando..");
       $http({
         method: 'POST',
-        data: {email: user.email},
+        params: {email: user.email},
         headers: localStorageService.get('default-headers'),
         url: localStorageService.get('urls').subscription + '/api/subscription/pay'
       }).then(function success(res) {
-        $scope.subscription.bill = "R$ 0,00";
+        fetchPaymentStatus();
       }, function failure(res) {
-        console.log("save subscription failed!");
+        console.log("payment failed!");
       });
     }
 }]);

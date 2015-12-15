@@ -21,9 +21,9 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="p in treatment.prescriptions" ng-click="select(p)">
-                        <td>{{p.medication.type}}</td>
+                        <td>{{medicationString(p.medication.type)}}</td>
                         <td>{{p.medication.name}}</td>
-                        <td>{{p.frequency}}</td>
+                        <td>{{xEnumToString(p.frequency)}}</td>
                         <td>{{p.medication.dosage}}</td>
                         <td>De {{p.starting_at * 1000 | date:'dd/MM/yyyy'}} até {{p.finishing_at * 1000 | date:'dd/MM/yyyy'}}</td>
                     </tr>

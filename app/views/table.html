@@ -13,10 +13,11 @@
         </div>
         <div class="pannel-body" style="margin-left: 20px; margin-bottom: 15px;">
           <h3>
-            <b>Balanço atual:</b> {{scope.box.value || 0 | currency}}
+            <b>Balanço atual:</b> {{box.value || 0 | currency}}
           </h3>
-          <button type="button" class="btn btn-default btn-info" ng-click="pay()"><i class="fa fa-money"><strong>   Pagar</strong></i>
-          </button>
+          <p class="text-danger" ng-show="subscription.phone == ''">Você precisa atualizar seus dados de pagamento para realizar transações.</p>
+          <button type="button" ng-show="payment_status == 0 && subscription.phone != ''" class="btn btn-default btn-info" ng-click="pay()"><i class="fa fa-money"><strong>   Pagar</strong></i></button>
+          <p class="text-success" ng-show="payment_status == 1">Seu pagamento recorrente foi efetuado!</p>
         </div>
     </div>
   </div>

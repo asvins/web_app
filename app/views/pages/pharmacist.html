@@ -16,16 +16,17 @@
 			            <table class="table table-striped table-bordered table-hover">
 			                <thead>
 			                    <tr>
-			                        <th>ID</th>
+			                        <th># do Tratamento</th>
 			                        <th>Nome</th>
                               <th>Aprovar</th>
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                    <tr ng-repeat="p in patients" ng-click="showDetails(p)">
-			                        <td>{{p.id}}</td>
-			                        <td>{{p.name}}</td>
-                              <td><button type="submit" ng-click="approve()" class="btn btn-success">Aprovar</button></td>
+			                    <tr ng-repeat="t in treatments" ng-click="showDetails(t)">
+			                        <td>{{t.id}}</td>
+			                        <td>{{t.title}}</td>
+                              <td ng-show="t.status == 1"><button type="submit" ng-click="approve(t)" class="btn btn-success">Aprovar</button></td>
+                              <td ng-show="t.status == 0">Tratamento já aprovado</td>
 			                    </tr>
 			                </tbody>
 			            </table>
@@ -58,21 +59,21 @@
                         </label>
                       </div>
                     </fieldset>
-										<label>Comentários</label>
-										<br>
-                    <p class="form-control-static">{{selectedTreatment.comments}}</p>
 										<h3 class="text-muted">Prescrições</h3>
 										<div class="row" style="margin-left: 15px;">
 											<div class="panel panel-default col-lg-4 col-lg-offset-1" ng-repeat="pr in selectedTreatment.prescriptions">
 												<div class="panel-heading" style="margin-left: -15px; margin-right: -15px;">
-													{{pr.medication}}
+													{{pr.medication.name}} / {{pr.medication.active_agent}}
 												</div>
 												<div class="panel-body">
-													<strong>Validade:</strong> De {{pr.starting_at}} até {{pr.finishing_at}}.
+													<strong>Validade:</strong> De {{pr.starting_at * 1000 | date:'dd/MM/yyyy'}} até {{pr.finishing_at * 1000 | date:'dd/MM/yyyy'}}.
 													<br>
-													<strong>Frequêcia:</strong> {{pr.frequency}} vez(es) ao dia.
+													<strong>Frequêcia:</strong> {{xEnumToString(pr.frequency)}}.
 													<br>
-													<a href="http://www.receipts-templates.com/wp-content/uploads/2014/12/Medical-receipt.png" target="_blank">Baixar receita atrelada.</a>
+													<a href="{{pr.medication.bula}}" target="_blank">Ver bula</a>
+												</div>
+												<div class="panel-footer" style="margin-left: -15px; margin-right: -15px;">
+													<a href="{{receiptURL(pr.id, pr.receipt.id)}}" ng-show="pr.receipt != null" target="_blank">Baixar receita atrelada.</a>
 												</div>
 											</div>
 										</div>

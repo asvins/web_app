@@ -68,7 +68,7 @@
 													<br>
 													<strong>Frequêcia:</strong> {{pr.frequency}} vez(es) ao dia.
 													<br>
-													<a href="{{receiptURL(pr.id, pr.receipt.ID)}}" ng-show="pr.receipt != null" target="_blank">Baixar receita atrelada.</a>
+													<a href="{{receiptURL(pr.id, pr.receipt.id)}}" ng-show="pr.receipt != null" target="_blank">Baixar receita atrelada.</a>
 												</div>
 											</div>
 										</div>
@@ -159,7 +159,7 @@
 									<input class="form-control" ng-model="pr.finishing_at" placeholder="Ex.: 10/30/2015">
 									<br>
 									<label>Vezes ao dia</label>
-									<select name="especialidade" ng-model="pr.frequency">
+									<select name="frequency" ng-model="pr.frequency">
 										<option value="0">{{xEnumToString(0)}}</option>
 										<option value="1">{{xEnumToString(1)}}</option>
 										<option value="2">{{xEnumToString(2)}}</option>

@@ -50,20 +50,20 @@ angular.module('sbAdminApp')
       }
     }
 
-    $scope.mEnumToString = function(e) {
-      switch (e) {
-        case 0:
-          return "Endocrinologista";
-        case 1:
-          return "Gastroenterologista";
-        case 2:
-          return "Ginecologista";
-        case 3:
-          return "Clínico Geral";
-        case 4:
-          return "Dermatologista";
-      }
+  $scope.pEnumToString = function(e) {
+    switch (e) {
+      case 0:
+        return "Administração Hospitalar";
+      case 1:
+        return "Administração Farmacêutica";
+      case 2:
+        return "Administração de Laboratório Clínico";
+      case 3:
+        return "Biofarmacêutico";
+      case 4:
+        return "Análises Clínicas";
     }
+  }
 
     $scope.save = function() {
       $scope.user.specialty = parseInt($scope.user.specialty);

@@ -17,6 +17,17 @@ angular.module('sbAdminApp')
 
     $scope.file = null;
 
+    $scope.medicationString = function(e) {
+      switch (e) {
+        case 0:
+          return "Líquido";
+        case 1:
+          return "Pílulas";
+        case 2:
+          return "Pomada";
+      }
+    }
+
     var fetchRecipe = function(pr) {
       $http({
         method: 'GET',
@@ -35,6 +46,21 @@ angular.module('sbAdminApp')
       }
       return localStorageService.get('urls').core + '/api/receipt/' + pr.id + '?receipt_id=' + pr.receipt.id;
     };
+
+    $scope.xEnumToString = function (e) {
+      switch (e) {
+        case 0:
+          return "De 4 em 4 horas";
+        case 1:
+          return "De 6 em 6 horas";
+        case 2:
+          return "De 8 em 8 horas";
+        case 3:
+          return "De 12 em 12 horas";
+        case 4:
+          return "De 24 em 24 horas";
+      }
+    }
 
     var fetchMyTreatment = function() {
       $http({

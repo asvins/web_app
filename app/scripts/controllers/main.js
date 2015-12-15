@@ -40,6 +40,15 @@ angular.module('sbAdminApp')
       });
     };
     fetchFeedEvents();
+  	function Loop () {
+  		setTimeout(function () {
+        fetchFeedEvents();
+				Loop();
+			}, 5000);
+  	}
+    Loop();
+
+
 
     $scope.showDetails = function (med) {
       $scope.curr_med = med;
